@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Balance Calculator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/styles.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <div class="hero">
+            <span class="hero-text">
+                <!-- Date -->
+                <h3 id="date"></h3>
+                <!-- Current balance -->
+                <h1 id="balance"></h1>
+                <div class="amount-display green">
+                    INCOME
+                    <span id="income">0.00</span>
+                    <span id="income-percentage"></span>
+                </div>
+                <div class="amount-display red">
+                    EXPENSES
+                    <span id="expenses">0.00</span>
+                    <span id="expenses-percentage"></span>
+                </div>
+            </span>
+            <img class="hero-image" src="images/bg.jpg" />
+        </div>
+        
+        <div class="bar">
+            <!-- dropdown +- -->
+            <select id="sign" name="sign">
+                <option value="+">+</option>
+                <option value="-">-</option>
+            </select>
+            <!-- description -->
+            <input id="description" type="text" placeholder="Add description" />
+            <!-- Input value -->
+            <input id="amount" type="text" placeholder="Value" />
+            <!-- Add button -->
+            <button id="enter">&#x2713;</button>
+            <button id="save" style="display: none;">Save</button>
+        </div>
+        
+
+        <div class="flex-container">
+            <ul id="income-list"  class="flex-list">
+                <h3 class="green-text">INCOME</h3>
+                <!-- <li>hello 1000</li>
+                <li>hello 1000</li> -->
+            </ul>
+            <ul id="expense-list" class="flex-list">
+                <h3 class="red-text">EXPENSES</h3>
+                <!-- <li>hello 1000</li>
+                <li>hello 1000</li> -->
+            </ul>
+        </div>
+        <!-- two columns -->
+        <!-- Expenses -->
+        <!-- Income -->
+        <script src="app.js">
+        </script>
+    </body>
+</html>
