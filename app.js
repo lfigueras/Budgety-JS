@@ -105,7 +105,7 @@ let createListNode = (item) => {
 let updateExpPercentage = () => {
     // expensesPercentageVal = ( expenses / income ) * 100
     let expensesPercentageVal = parseFloat(expenses.innerHTML) /  parseFloat(income.innerHTML) * 100;
-    if(expensesPercentageVal != Number.NEGATIVE_INFINITY) {
+    if (!isNaN(expensesPercentageVal) && expensesPercentageVal != Number.NEGATIVE_INFINITY) {
         expensesPercentage.innerHTML = (expensesPercentageVal).toFixed(2) + '%';    
     } else {
         expensesPercentage.innerHTML = '';
