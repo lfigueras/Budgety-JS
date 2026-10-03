@@ -4,62 +4,85 @@
         <title>Balance Calculator</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <link href="css/styles.css" rel="stylesheet">
 
     </head>
     <body>
-        <div class="hero">
-            <span class="hero-text">
-                <!-- Date -->
-                <h3 id="date"></h3>
-                <!-- Current balance -->
-                <h1 id="balance"></h1>
-                <div class="amount-display green">
-                    INCOME
-                    <span id="income">0.00</span>
-                    <span id="income-percentage"></span>
+        <div class="app-shell">
+            <header class="hero">
+                <img class="hero-image" src="images/bg.jpg" alt="">
+                <div class="hero-content">
+                    <p class="eyebrow">Budget overview</p>
+                    <h2 id="date"></h2>
+                    <p class="balance-label">Current balance</p>
+                    <h1 id="balance">0.00</h1>
+                    <div class="summary-grid">
+                        <div class="amount-display green">
+                            <span class="summary-label">Income</span>
+                            <span class="summary-value"><span id="income">0.00</span><span id="income-percentage"></span></span>
+                        </div>
+                        <div class="amount-display red">
+                            <span class="summary-label">Expenses</span>
+                            <span class="summary-value"><span id="expenses">0.00</span><span id="expenses-percentage"></span></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="amount-display red">
-                    EXPENSES
-                    <span id="expenses">0.00</span>
-                    <span id="expenses-percentage"></span>
-                </div>
-            </span>
-            <img class="hero-image" src="images/bg.jpg" />
-        </div>
-        
-        <div class="bar">
-            <!-- dropdown +- -->
-            <select id="sign" name="sign">
-                <option value="+">+</option>
-                <option value="-">-</option>
-            </select>
-            <!-- description -->
-            <input id="description" type="text" placeholder="Add description" />
-            <!-- Input value -->
-            <input id="amount" type="text" placeholder="Value" />
-            <!-- Add button -->
-            <button id="enter">&#x2713;</button>
-            <button id="save" style="display: none;">Save</button>
-        </div>
-        
+            </header>
 
-        <div class="flex-container">
-            <ul id="income-list"  class="flex-list">
-                <h3 class="green-text">INCOME</h3>
-                <!-- <li>hello 1000</li>
-                <li>hello 1000</li> -->
-            </ul>
-            <ul id="expense-list" class="flex-list">
-                <h3 class="red-text">EXPENSES</h3>
-                <!-- <li>hello 1000</li>
-                <li>hello 1000</li> -->
-            </ul>
+            <main class="content">
+                <section class="entry-section" aria-label="Add a transaction">
+                    <form id="entry-form" class="entry-bar">
+                        <div class="select-wrap">
+                            <select id="sign" name="sign" aria-label="Transaction type">
+                                <option value="+">Income +</option>
+                                <option value="-">Expense -</option>
+                            </select>
+                        </div>
+                        <input id="description" type="text" placeholder="Description" aria-label="Description" required>
+                        <input id="amount" type="number" min="0" step="0.01" placeholder="Amount" aria-label="Amount" required>
+                        <div class="select-wrap category-wrap">
+                            <select id="category" aria-label="Category" required></select>
+                        </div>
+                        <input id="entry-date" type="date" aria-label="Transaction date" required>
+                        <div class="entry-actions">
+                            <button id="enter" type="submit">Add entry</button>
+                            <button id="cancel-edit" type="button" hidden>Cancel</button>
+                        </div>
+                    </form>
+                </section>
+
+                <div class="ledger-tools" aria-label="Filter transactions">
+                    <label class="filter-control">Category
+                        <span class="select-wrap filter-select-wrap">
+                            <select id="category-filter" aria-label="Filter by category">
+                                <option value="">All categories</option>
+                            </select>
+                        </span>
+                    </label>
+                    <label class="filter-control">From
+                        <input id="date-from" type="date" aria-label="Start date">
+                    </label>
+                    <label class="filter-control">To
+                        <input id="date-to" type="date" aria-label="End date">
+                    </label>
+                    <button id="clear-filters" type="button">Clear filters</button>
+                </div>
+
+                <section class="ledger-grid" aria-label="Transactions">
+                    <section class="ledger-column">
+                        <h2 class="ledger-title green-text">Income</h2>
+                        <ul id="income-list" class="flex-list"></ul>
+                    </section>
+                    <section class="ledger-column">
+                        <h2 class="ledger-title red-text">Expenses</h2>
+                        <ul id="expense-list" class="flex-list"></ul>
+                    </section>
+                </section>
+            </main>
         </div>
-        <!-- two columns -->
-        <!-- Expenses -->
-        <!-- Income -->
-        <script src="app.js">
-        </script>
+        <script src="app.js"></script>
     </body>
 </html>
