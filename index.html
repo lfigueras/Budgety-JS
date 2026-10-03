@@ -15,7 +15,20 @@
             <header class="hero">
                 <img class="hero-image" src="images/bg.jpg" alt="">
                 <div class="hero-content">
-                    <p class="eyebrow">Budget overview</p>
+                    <div class="hero-heading-row">
+                        <p class="eyebrow">Budget overview</p>
+                        <div class="select-wrap currency-wrap">
+                            <select id="currency" aria-label="Currency">
+                                <option value="PHP">PHP (&#8369;)</option>
+                                <option value="USD">USD ($)</option>
+                                <option value="EUR">EUR (&euro;)</option>
+                                <option value="GBP">GBP (&pound;)</option>
+                                <option value="JPY">JPY (&yen;)</option>
+                                <option value="AUD">AUD (A$)</option>
+                                <option value="CAD">CAD (CA$)</option>
+                            </select>
+                        </div>
+                    </div>
                     <h2 id="date"></h2>
                     <p class="balance-label">Current balance</p>
                     <h1 id="balance">0.00</h1>

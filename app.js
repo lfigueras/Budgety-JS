@@ -11,10 +11,12 @@ class Record {
 
 const db = window.localStorage;
 const categories = ['Salary', 'Freelance', 'Housing', 'Food', 'Transport', 'Utilities', 'Health', 'Shopping', 'Entertainment', 'Other'];
+const supportedCurrencies = ['PHP', 'USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD'];
 const date = document.querySelector('#date');
 const balance = document.querySelector('#balance');
 const income = document.querySelector('#income');
 const expenses = document.querySelector('#expenses');
+const currencySelect = document.querySelector('#currency');
 const sign = document.querySelector('#sign');
 const description = document.querySelector('#description');
 const amount = document.querySelector('#amount');
@@ -34,6 +36,9 @@ const clearFilters = document.querySelector('#clear-filters');
 const ledgerGrid = document.querySelector('.ledger-grid');
 
 const today = new Date();
+const savedCurrency = db.getItem('currency');
+currencySelect.value = supportedCurrencies.includes(savedCurrency) ? savedCurrency : 'PHP';
+
 const toDateInputValue = (value) => {
     const year = value.getFullYear();
     const month = String(value.getMonth() + 1).padStart(2, '0');
@@ -86,6 +91,17 @@ const formatDate = (value) => new Date(`${value}T00:00:00`).toLocaleDateString(u
     day: 'numeric',
     year: 'numeric'
 });
+let numberFormatter;
+const updateNumberFormatter = () => {
+    numberFormatter = new Intl.NumberFormat('en-PH', {
+        style: 'currency',
+        currency: currencySelect.value,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+};
+updateNumberFormatter();
+const formatAmount = (value) => numberFormatter.format(value);
 
 const getVisibleRecords = () => {
     const hasDateFilter = dateFrom.value || dateTo.value;
@@ -118,7 +134,7 @@ const createTransactionNode = (item) => {
 
     const transactionAmount = document.createElement('span');
     transactionAmount.className = `transaction-amount ${item.sign === '+' ? 'positive' : 'negative'}`;
-    transactionAmount.textContent = `${item.sign}${item.amount.toFixed(2)}`;
+    transactionAmount.textContent = `${item.sign}${formatAmount(item.amount)}`;
 
     const actions = document.createElement('div');
     actions.className = 'transaction-actions';
@@ -169,9 +185,9 @@ const render = () => {
         .reduce((total, item) => total + item.amount, 0);
     const balanceTotal = incomeTotal - expensesTotal;
 
-    balance.textContent = `${balanceTotal > 0 ? '+' : ''}${balanceTotal.toFixed(2)}`;
-    income.textContent = incomeTotal.toFixed(2);
-    expenses.textContent = (-expensesTotal).toFixed(2);
+    balance.textContent = `${balanceTotal > 0 ? '+' : ''}${formatAmount(balanceTotal)}`;
+    income.textContent = formatAmount(incomeTotal);
+    expenses.textContent = formatAmount(expensesTotal > 0 ? -expensesTotal : 0);
     expensesPercentage.textContent = incomeTotal > 0
         ? `${((expensesTotal / incomeTotal) * 100).toFixed(2)}%`
         : '';
@@ -269,6 +285,11 @@ clearFilters.addEventListener('click', () => {
     categoryFilter.value = '';
     dateFrom.value = '';
     dateTo.value = '';
+    render();
+});
+currencySelect.addEventListener('change', () => {
+    updateNumberFormatter();
+    db.setItem('currency', currencySelect.value);
     render();
 });
 
